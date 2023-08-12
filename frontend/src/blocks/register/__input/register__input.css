@@ -1,0 +1,16 @@
+.register__input{
+    width: 358px;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #CCCCCC;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #CCCCCC;
+    outline: none;
+    padding-bottom: 13px;
+}

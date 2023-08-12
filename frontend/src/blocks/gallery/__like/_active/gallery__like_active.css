@@ -1,0 +1,4 @@
+.gallery__like_active{
+    transition: .5s all;
+    background: url(../../../../images/like-active.svg);
+}

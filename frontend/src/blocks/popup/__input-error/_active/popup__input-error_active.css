@@ -1,0 +1,4 @@
+.popup__input-error_active {
+    min-height: 24px;
+    visibility: visible;
+}

@@ -1,0 +1,10 @@
+.gallery__description{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 79px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0 0 10px 10px;
+}
