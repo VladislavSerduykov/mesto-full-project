@@ -1,4 +1,5 @@
 require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -9,7 +10,7 @@ const { handleError } = require('./middlewares/handleError');
 const { routes } = require('./routes/route');
 const { errorLogger, requestLogger } = require('./middlewares/logger');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
+const { PORT = 3000, DB_ADDRESS = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
 
 const app = express();
 
@@ -19,12 +20,12 @@ const limiter = rateLimit({
 });
 
 mongoose
-  .connect(DB_URL, {
+  .connect(DB_ADDRESS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(`Connected to database on ${DB_URL}`);
+    console.log(`Connected to database on ${DB_ADDRESS}`);
   })
   .catch((err) => {
     console.log('Error on database connection');
@@ -35,9 +36,15 @@ app.use(limiter);
 
 app.use(cors());
 
-app.user(requestLogger);
+app.use(requestLogger);
 
 app.use('*', express.json());
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.use(routes);
 
