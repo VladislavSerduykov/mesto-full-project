@@ -29,6 +29,7 @@ class Auth {
 
     return fetch(url, {
       method: "POST",
+      redirect: true,
       headers: {
         "Content-Type": "application/json",
       },
@@ -43,6 +44,7 @@ class Auth {
     const url = `${this._baseUrl}/users/me`;
     return fetch(url, {
       method: 'GET',
+      redirect: true,
       headers: {
         "Content-Type": "application/json",
         "Authorization" : `Bearer ${token}`
