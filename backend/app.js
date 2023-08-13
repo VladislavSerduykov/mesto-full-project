@@ -34,7 +34,7 @@ mongoose
 
 app.use(limiter);
 
-app.use(cors({ origin: ['http://localhost:3000', 'https://vladislav.student.nomoreparties.co', 'http://vladislav.student.nomoreparties.co'], maxAge: 30 }));
+app.use(cors());
 
 app.use(requestLogger);
 
