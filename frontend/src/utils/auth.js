@@ -1,3 +1,5 @@
+import { apiConfig } from './apiConfig'
+
 class Auth {
   constructor(baseUrl) {
     this._baseUrl = baseUrl;
@@ -29,7 +31,6 @@ class Auth {
 
     return fetch(url, {
       method: "POST",
-      redirect: true,
       headers: {
         "Content-Type": "application/json",
       },
@@ -44,7 +45,6 @@ class Auth {
     const url = `${this._baseUrl}/users/me`;
     return fetch(url, {
       method: 'GET',
-      redirect: true,
       headers: {
         "Content-Type": "application/json",
         "Authorization" : `Bearer ${token}`
@@ -58,6 +58,6 @@ class Auth {
 }
 
 
-const auth = new Auth("https://api.vladislav.student.nomoreparties.co");
+const auth = new Auth(apiConfig.baseUrl);
 
 export default auth;
