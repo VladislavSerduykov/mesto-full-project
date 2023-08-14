@@ -17,12 +17,18 @@ async function createUser(req, res, next) {
       name, about, avatar, email, password,
     } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
-    await User.create({
-      name, about, avatar, email, password: hashPassword,
+
+    let user = await User.create({
+      email,
+      password: hashPassword,
+      name,
+      about,
+      avatar,
     });
-    res.status(201).send({
-      message: 'Пользователь успешно создан',
-    });
+
+    user = user.toObject();
+    delete user.password;
+    res.status(201).send(user);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
       next(new ValidationError(`Неверные данные в ${err.path ?? 'запросе'}`));
@@ -39,9 +45,7 @@ async function createUser(req, res, next) {
 
 async function getCurrentUser(req, res, next) {
   try {
-    const userId = req.user._id;
-    const user = await User.findById(userId);
-
+    const user = await User.findById(req.user._id);
     if (!user) {
       throw new NotFoundError('Пользователь не найден');
     }

@@ -14,7 +14,6 @@ const paramsValidationConfig = {
 
 const cardRoute = express.Router();
 
-
 cardRoute.get('/', getAllCards);
 
 cardRoute.post('/', celebrate({

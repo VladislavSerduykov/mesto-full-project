@@ -20,7 +20,7 @@ function Main({
   return (<>
     <Header>
       <div className="header__nav">
-      <p className="header__nav_text">{email}</p>
+      <p className="header__nav_text">{currentUser.email}</p>
       <Link to="/sign-in" onClick={onLogout} className='header__nav_button'>Выйти</Link>
       </div>
     </Header>
@@ -53,7 +53,13 @@ function Main({
       </section>
       <section className="gallery">
         {cards.map((card) => (
-          <Card card={card} key={card._id} onCardClick={onCardClick} onCardLike={onCardLike} onCardDelete={onCardDelete} />
+          <Card 
+          card={card} 
+          key={card._id} 
+          onCardClick={onCardClick} 
+          onCardLike={onCardLike} 
+          onCardDelete={onCardDelete} 
+          />
         ))}
       </section>
     </main>

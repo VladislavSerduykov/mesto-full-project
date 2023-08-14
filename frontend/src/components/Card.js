@@ -40,11 +40,11 @@ function Card({card, onCardClick, onCardDelete, onCardLike}) {
           <p className="gallery__like-counter">{card.likes.length}</p>
         </div>
       </div>
-{isOwn && <button
+{isOwn && (<button
           className="gallery__delete"
           type="button"
           onClick={handleCardDelete}
-        ></button>}
+        ></button>)}
         
 
     </article>

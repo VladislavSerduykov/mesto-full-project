@@ -1,4 +1,4 @@
-import { apiConfig } from './apiConfig'
+import { config } from './apiConfig'
 
 class Auth {
   constructor(baseUrl) {
@@ -58,6 +58,6 @@ class Auth {
 }
 
 
-const auth = new Auth(apiConfig.baseUrl);
+const auth = new Auth('http://localhost:3000');
 
 export default auth;

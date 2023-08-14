@@ -15,6 +15,8 @@ async function createCard(req, res, next) {
     const { name, link } = req.body;
     const ownerId = req.user._id;
     const card = await cardSchema.create({ name, link, owner: ownerId });
+    await card.populate('owner');
+    await card.populate('likes');
     res.status(201).send(card);
   } catch (err) {
     if (err.name === 'CastError' || err.name === 'ValidationError') {
@@ -29,7 +31,7 @@ async function deleteCard(req, res, next) {
   try {
     const { cardId } = req.params;
 
-    const card = await cardSchema.findById(cardId).populate('owner');
+    const card = await cardSchema.findById(cardId).populate('owner').populate('likes');
 
     if (!card) {
       throw new NotFoundError('Карточка не найдена');
@@ -52,12 +54,11 @@ async function deleteCard(req, res, next) {
 
 async function putLike(req, res, next) {
   try {
-    const userId = req.user._id;
     const card = await cardSchema.findByIdAndUpdate(
       req.params.cardId,
-      { $addToSet: { likes: userId } },
+      { $addToSet: { likes: req.user._id } },
       { new: true },
-    );
+    ).populate('owner').populate('likes');
 
     if (!card) {
       throw new NotFoundError('Карточка не найдена');
@@ -80,7 +81,7 @@ async function deleteLike(req, res, next) {
       req.params.cardId,
       { $pull: { likes: userId } },
       { new: true },
-    );
+    ).populate('owner').populate('likes');
 
     if (!card) {
       throw new NotFoundError('Карточка не найдена');

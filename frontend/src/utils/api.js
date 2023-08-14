@@ -2,8 +2,12 @@ import { config } from "./apiConfig";
 
 class Api {
   constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
+    this._baseUrl = 'http://localhost:3000';
     this._headers = headers;
+  }
+
+  setToken(token) {
+    this._headers.authorization = `Bearer ${token}`;
   }
 
   _checkResponse(res) {
@@ -21,6 +25,7 @@ class Api {
       headers: this._headers,
     }).then(this._checkResponse);
   }
+
 
   getCardList() {
     const url = `${this._baseUrl}/cards`;

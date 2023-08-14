@@ -1,20 +1,36 @@
+const bcrypt = require('bcryptjs');
+
 const jwt = require('jsonwebtoken');
-
 const { User } = require('../models/user');
-const { UnauthorizedError } = require('../errors/errors');
+const { UnauthorizedError } = require('../errors/UnauthorizedError');
 
-function login(req, res) {
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+async function login(req, res) {
   const { email, password } = req.body;
 
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      res.send({
-        token: jwt.sign({ _id: user._id }, 'super-strong-secret', { expiresIn: '7d' }),
-      });
-    })
-    .catch(() => {
-      throw new UnauthorizedError('Неправильные почта или пароль');
-    });
-}
+  const user = await User.findOne({ email });
 
+  if (!user) {
+    throw new UnauthorizedError('Неверные данные для входа');
+  }
+
+  const hasRightPassword = await bcrypt.compare(password, user.password);
+
+  if (!hasRightPassword) {
+    throw new UnauthorizedError('Неверные данные для входа');
+  }
+
+  const token = jwt.sign(
+    {
+      _id: user._id,
+    },
+    NODE_ENV === 'production' ? JWT_SECRET : 'secret',
+    {
+      expiresIn: '7d',
+    },
+  );
+
+  res.send({ token });
+}
 module.exports = { login };

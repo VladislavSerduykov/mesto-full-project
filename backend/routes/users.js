@@ -9,11 +9,13 @@ const usersRoute = express.Router();
 
 usersRoute.get('/', getAllUsers);
 usersRoute.get('/me', getCurrentUser);
+
 usersRoute.get('/:userId', celebrate({
   params: Joi.object().keys({
     userId: Joi.string().custom(validateObjectId),
   }),
 }), getUser);
+
 usersRoute.patch('/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),

@@ -2,6 +2,9 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+
+const cookies = require('cookie-parser');
 const { errors } = require('celebrate');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
@@ -34,10 +37,11 @@ mongoose
 
 app.use(limiter);
 
-app.use(cors());
+app.use(cors({ origin: ['http://localhost:3001'] }));
 
 app.use(requestLogger);
 
+app.use(helmet());
 app.use('*', express.json());
 
 app.get('/crash-test', () => {
@@ -47,6 +51,7 @@ app.get('/crash-test', () => {
 });
 
 app.use(routes);
+app.use(cookies());
 
 app.use(errorLogger);
 

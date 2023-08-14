@@ -31,7 +31,6 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
   const [infoMessage, setInfoMessage] = useState();
 
   const navigate = useNavigate();
@@ -100,7 +99,6 @@ function App() {
 
   function handleUpdateUser(userInfo) {
     api
-
       .changeUserInfo(userInfo)
       .then((updateUserInfo) => {
         setCurrentUser(updateUserInfo);
@@ -111,7 +109,6 @@ function App() {
 
   function handleUpdateAvatar({ avatar }) {
     api
-
       .setUserImage(avatar)
       .then((newUserInfo) => {
         setCurrentUser(newUserInfo);
@@ -122,7 +119,6 @@ function App() {
 
   function handleAddPlace(newPlace) {
     api
-
       .addNewCard(newPlace)
       .then((newCard) => {
         setCards((state) => [newCard, ...state]);
@@ -132,12 +128,12 @@ function App() {
   }
   // Авторизация
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       auth
         .checkToken(token)
-        .then((res) => {
-          setEmail(res.data.email);
+        .then(() => {
+          api.setToken(token);
           setIsLoggedIn(true);
           navigate("/");
         })
@@ -183,7 +179,6 @@ function App() {
                   onCardClick={handleCardClick}
                   onCardLike={handleCardLike}
                   onCardDelete={handleCardDelete}
-                  email={email}
                   onLogout={handleLogout}
                 />
               </ProtectedRoute>

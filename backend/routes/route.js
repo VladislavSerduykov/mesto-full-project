@@ -24,9 +24,9 @@ routes.post('/signin', celebrate({
     password: Joi.string().required(),
   }),
 }), login);
-routes.use('/users', usersRoute);
-routes.use('/cards', cardRoute);
-routes.use(auth);
+
+routes.use('/users', auth, usersRoute);
+routes.use('/cards', auth, cardRoute);
 
 routes.all('*', (req, res, next) => {
   next(new NotFoundError('Адрес не найден'));
