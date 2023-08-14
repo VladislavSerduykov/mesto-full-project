@@ -1,5 +1,5 @@
 export const config = {
-  baseUrl: 'http://api.vladislav.student.nomoparties.co', 
+  baseUrl: 'http://api.vladislav.student.nomoreparties.co', 
   headers: {
     "Content-Type": "application/json",
   },
