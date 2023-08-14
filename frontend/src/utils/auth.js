@@ -58,6 +58,6 @@ class Auth {
 }
 
 
-const auth = new Auth('http://localhost:3000');
+const auth = new Auth(config.baseUrl);
 
 export default auth;

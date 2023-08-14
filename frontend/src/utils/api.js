@@ -2,7 +2,7 @@ import { config } from "./apiConfig";
 
 class Api {
   constructor({ baseUrl, headers }) {
-    this._baseUrl = 'http://localhost:3000';
+    this._baseUrl = baseUrl;
     this._headers = headers;
   }
 

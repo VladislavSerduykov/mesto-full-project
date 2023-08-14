@@ -1,5 +1,5 @@
 export const config = {
-  baseUrl: 'http://localhost:3000', 
+  baseUrl: 'http://api.vladislav.student.nomoparties.co', 
   headers: {
     "Content-Type": "application/json",
   },
